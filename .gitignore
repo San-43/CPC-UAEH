@@ -1,0 +1,10 @@
+# Ignore Everything
+*
+
+# But not .cpp
+!main.cpp
+# Or directories
+!*/
+!.gitignore
+!README.md
+/2022-2023 ACM-ICPC Latin American Regional Programming Contest
