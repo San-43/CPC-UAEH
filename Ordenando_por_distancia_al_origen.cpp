@@ -21,7 +21,19 @@ void solve () {
         pt p = {x, y, dist};
         v[i] = p;
     }
-    
+
+    sort(v.begin(), v.end(), [](pt &a, pt &b) {
+        if(a.dist != b.dist) {
+            return a.dist < b.dist;
+        }
+        if(a.x != b.x) {
+            return a.x < b.x;
+        } 
+        return a.y < b.y;
+    });
+    for (auto p : v) {
+        cout << p.x << " " << p.y << '\n';
+    }
 };
 
 int main() {
