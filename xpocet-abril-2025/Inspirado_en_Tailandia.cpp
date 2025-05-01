@@ -19,6 +19,7 @@ void dfs(int x, int y, vector<vector<char>>& v, vector<vector<bool>>& visited, s
     dfs(x, y + 1, v, visited, s); 
     dfs(x, y - 1, v, visited, s); 
 
+    //putas dos líneas aaaaaaa
     visited[x][y] = false;
     s.pop_back();
 }
