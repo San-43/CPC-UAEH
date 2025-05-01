@@ -12,18 +12,15 @@ void dfs(int x, int y, vector<vector<char>>& v, vector<vector<bool>>& visited, s
 
     visited[x][y] = true;
     s += v[x][y];
-    cout << s << "\n";
     bitset<64> b(s);
     ans = max(ans, b.to_ullong());
     dfs(x + 1, y, v, visited, s); 
-    cout << s << "\n";
     dfs(x - 1, y, v, visited, s); 
-    cout << s << "\n";
     dfs(x, y + 1, v, visited, s); 
-    cout << s << "\n";
     dfs(x, y - 1, v, visited, s); 
-    cout << s << "\n";
-    
+
+    visited[x][y] = false;
+    s.pop_back();
 }
 
 
@@ -40,7 +37,7 @@ void solve () {
         for(int j = 0; j < m; j++) {
             string s1 = "";
             vector<vector<bool>> visited(n, vector<bool>(m, false));
-            dfs(1, 1, v, visited, s1);
+            dfs(i, j, v, visited, s1);
         }
     }
 
