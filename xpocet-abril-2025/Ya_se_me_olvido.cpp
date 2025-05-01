@@ -6,6 +6,11 @@ using namespace std;
 void solve () {
     int n;
     cin >> n;
+    while(n--) {
+        string s;
+        cin>>s;
+        cout << s[s.length() - 1] << '\n';
+    }
 
 };
 
@@ -13,8 +18,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     
-    int t;
-    cin >> t;
+    int t = 1;
     while(t--) {
         solve();
     }
