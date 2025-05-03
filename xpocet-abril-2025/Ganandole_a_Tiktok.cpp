@@ -6,15 +6,17 @@ using namespace std;
 void solve () {
     int n;
     cin >> n;
-    for(int i = 0; i < n; i++) {
-        string s;
-        cin >> s;
-        string tmp = s;
-        reverse(s.begin(), s.end());
-        if(tmp == s) {
-            cout << tmp << '\n';
+    map<int, string> m;
+
+    for(int i = 0; i < 2005; i++) {
+        if(i < 10) {
+            m[i] = to_string(i);
             continue;
         }
+
+        string s = to_string(i);
+        string tmp = s;
+        reverse(tmp.begin(), tmp.end());
         string tmp2 = "";
         bool ok = false;
         do {
@@ -38,15 +40,26 @@ void solve () {
             tmp2 = ans;
             reverse(tmp2.begin(), tmp2.end());
             if(tmp2 == ans) {
-                cout << tmp2 << '\n';
+                m[i] = tmp2;
                 ok = true;
                 break;
             }
         } while (tmp2.length() < 5005);
-        if(!ok) {
-            cout << "-1\n";
-        }
+        if(!ok)
+            m[i] = to_string(-1);
+    }
 
+    for(int i = 0; i < n; i++) {
+        string s;
+        cin >> s;
+        string tmp = s;
+        reverse(s.begin(), s.end());
+        if(tmp == s) {
+            cout << tmp << '\n';
+            continue;
+        } else {
+            cout << m[stoi(s)] << '\n';
+        }
     }
 
 };
