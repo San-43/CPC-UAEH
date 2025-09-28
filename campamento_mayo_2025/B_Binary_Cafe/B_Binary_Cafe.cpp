@@ -4,10 +4,8 @@
 using namespace std;
 
 void solve() {
-    int n, k;
-    cin >> n >> k;
-    k = min(k, 30);
-    cout << min(n, (1 << k) - 1) + 1 << "\n";
+    int n;
+    cin >> n;
 }
 
 int main() {
