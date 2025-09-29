@@ -45,3 +45,55 @@ int main() {
 
     return 0;
 }
+ 
+
+vector<bool> visited(1005);
+vector<ll> grafos[1005];
+vector<int> niveles(100, 0);
+
+void bfs_nivels(ll start) {
+    queue<pair<ll, int>> q;
+    visited[start] = true;
+    q.push({start, 0});
+
+    while (!q.empty()) {
+        ll node = q.front().first;
+        int nivel = q.front().second;
+        q.pop();
+
+        niveles[nivel]++;
+
+        for (ll adjNode : grafos[node]) {
+            if (!visited[adjNode]) {
+                visited[adjNode] = true;
+                q.push({adjNode, nivel + 1});
+            }
+        }
+    }
+}
+
+int main() {
+    cin.tie(nullptr);
+    ios_base::sync_with_stdio(false);
+
+    ll n, q, first;
+
+    cin >> n;
+    for (ll i = 0; i < n; ++i) {
+        cin >> q;
+        for (ll j = 0; j < q; ++j) {
+            cin >> first;
+            grafos[i].push_back(first);
+        }
+    }
+
+    cin >> first;
+    bfs_nivels(first);
+
+    niveles.erase(niveles.begin());
+    sort(niveles.rbegin(), niveles.rend());
+
+    cout << niveles[0] << end;
+
+    return 0;
+}
