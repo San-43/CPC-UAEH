@@ -34,9 +34,9 @@ void solve() {
         if(low == up) {
             cout << -1 << " " << -1 << edl;
         } else {
-            int i = int(low - v.begin());
-            int j = int(up - 1 - v.begin());
-            cout << i+1 << " " << j+1 << edl;
+            int i = low - v.begin();
+            int j = up - 1 - v.begin();
+            cout << i << " " << j << edl;
         }
     }
 }
