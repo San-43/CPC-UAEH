@@ -20,24 +20,22 @@ constexpr int MxN = 2e5 + 5;
 constexpr int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 
 void solve() {
-    int n, q;
-    cin >> n >> q;
-    vi v(n);
-    for(auto &e : v) cin >> e;
-    sort(v.begin(), v.end());
+    int n, m;
+    cin >> n >> m;
 
-    while(q--) {
-        ll l;
-        cin >> l;
-        auto [low, up] = equal_range(v.begin(), v.end(), l);
+    unordered_map <int, vector <int>> mp;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        mp[x].push_back(i);
+    }
 
-        if(low == up) {
-            cout << -1 << " " << -1 << edl;
-        } else {
-            int i = low - v.begin();
-            int j = up - 1 - v.begin();
-            cout << i << " " << j << edl;
-        }
+    while (m--) {
+        int x;
+        cin >> x;
+
+        if (mp[x].empty()) cout << "-1 -1\n";
+        else cout << mp[x][0] << " " << mp[x].back() << "\n";
     }
 }
 
