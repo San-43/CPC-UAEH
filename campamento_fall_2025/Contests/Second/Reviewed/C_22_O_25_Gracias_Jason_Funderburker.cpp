@@ -13,11 +13,6 @@ using vi = vector<ll>;
 #define pb push_back
 #define edl '\n'
 
-template <typename T>
-void fill_seq(vector<T> &v, T start = 1) {
-    iota(v.begin(), v.end(), start);
-}
-
 constexpr long long LLINF = 2e18;
 constexpr int INF = 2e9;
 constexpr int MOD = 1e9 + 7;
@@ -25,21 +20,20 @@ constexpr int MxN = 2e5 + 5;
 constexpr int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 
 void solve() {
-    string s1, s2;
-    cin >> s1 >> s2;
-    string tmp;
-    if(s1 == "Aremi") {
-        cout << "George" << edl;
-        tmp = "George";
-    }
-    else {
-        cout << "Aremi" << edl;
-        tmp = "Aremi";
-    }
+    ll n, d;
+    cin >> n >> d;
+    vi a(n);
+    for(auto &e : a) cin >> e;
 
-    if(s2 == tmp) cout << "Valeria" << edl;
-    else cout << tmp << edl;
+    sort(a.begin(), a.end());
 
+    for(int i = 0; i < n - 1; i++) {
+        if(abs(a[i] - a[i+1]) == d) {
+            cout << "Querido Dios, no tengo suficientes palabras para expresar lo mucho que estoy agradecido al mundo por la existencia de Jason Funderburker." << edl;
+            return;
+        }
+    }
+    cout << "Te perdono, Jason Funderburker." << edl;
 }
 
 int main() {
