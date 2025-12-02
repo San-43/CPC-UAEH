@@ -22,31 +22,72 @@ constexpr int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 void solve() {
     ll n, x, k;
     cin >> n >> x >> k;
-    vector<vector<int>> a(n+5, vector<int>());
+
+    vector<vector<pair<int, int>>> a(n + 5, vector<pair<int, int>>());
 
     unordered_map<int, int> mp;
 
-    for(int i = 1; i <= n; i++) {
-        int x;
-        cin >> x;
-        mp[i] = x;
+    for (int i = 1; i <= n; i++) {
+        int j;
+        cin >> j;
+        mp[i] = j;
     }
 
-    for(int i = 1; i < n; i++) {
+    if (n == 1) {
+        cout << -1 << edl;
+        return;
+    }
+
+    for (int i = 1; i < n; i++) {
         int x, y;
         cin >> x >> y;
-        a[x].push_back(y);
-    }
-    int l = 0;
-    int r = a.size();
-    int nodo = 1;
-    ll tmp = 0;
-    while(l <= r) {
-        int mid = l + (r - l) / 2;
-        ll sum = 0;
-        
+        a[x].emplace_back(y, mp[y]);
     }
 
+    for (int i = 1; i < n; i++) {
+        if (!a[i].empty()) {
+            sort(a[i].begin(), a[i].end(), [&](const pair<int, int> &a, const pair<int, int> &b) {
+                return a.second < b.second;
+            });
+        }
+    }
+
+    /*for(int i = 1; i < n; i++) {
+        cout << "i = " << i << edl;
+        for(auto j : a[i]) {
+            cout << j.first << " " << j.second << edl;
+        }
+    }*/
+
+    int nodo = 1;
+    queue<int> q;
+    vector<int> ans(n, -1);
+
+    ans[nodo] = 0;
+    q.push(nodo);
+    while(!q.empty()){
+        int u = q.front();
+        q.pop();
+        for(auto v : a[u]) {
+            if(ans[v.first] == -1) {
+                ans[v.first] = ans[u] + 1;
+                q.push(v.first);
+                if(v.second <= x) {
+                    x -= v.second;
+                    if(x == 0 && k > 0) {
+                        cout << -1 << edl;
+                        return;
+                    } else {
+                        k--;
+                        if(k == 0) {
+                            cout << ans[v.first] << edl;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 int main() {
