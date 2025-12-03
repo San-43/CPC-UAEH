@@ -23,9 +23,9 @@ void solve() {
     ll n, x, k;
     cin >> n >> x >> k;
 
-    vector<vector<pair<int, int>>> a(n + 5, vector<pair<int, int>>());
+    vector<vector<int>> a(n+4);
 
-    unordered_map<int, int> mp;
+    unordered_map<int, ll> mp;
 
     for (int i = 1; i <= n; i++) {
         int j;
@@ -33,61 +33,60 @@ void solve() {
         mp[i] = j;
     }
 
-    if (n == 1) {
+    for (int i = 1; i < n; i++) {
+        int x, y;
+        cin >> x >> y;
+        a[x].push_back(y);
+    }
+    if(n == 1) {
         cout << -1 << edl;
         return;
     }
 
-    for (int i = 1; i < n; i++) {
-        int x, y;
-        cin >> x >> y;
-        a[x].emplace_back(y, mp[y]);
-    }
-
-    for (int i = 1; i < n; i++) {
-        if (!a[i].empty()) {
-            sort(a[i].begin(), a[i].end(), [&](const pair<int, int> &a, const pair<int, int> &b) {
-                return a.second < b.second;
-            });
-        }
-    }
-
-    /*for(int i = 1; i < n; i++) {
-        cout << "i = " << i << edl;
-        for(auto j : a[i]) {
-            cout << j.first << " " << j.second << edl;
-        }
-    }*/
-
-    int nodo = 1;
     queue<int> q;
-    vector<int> ans(n, -1);
-
-    ans[nodo] = 0;
-    q.push(nodo);
-    while(!q.empty()){
+    vector<int> d(n+1, -1);
+    int maxd = -1;
+    d[1] = 0;
+    q.push(1);
+    while(!q.empty()) {
         int u = q.front();
         q.pop();
         for(auto v : a[u]) {
-            if(ans[v.first] == -1) {
-                ans[v.first] = ans[u] + 1;
-                q.push(v.first);
-                if(v.second <= x) {
-                    x -= v.second;
-                    if(x == 0 && k > 0) {
-                        cout << -1 << edl;
-                        return;
-                    } else {
-                        k--;
-                        if(k == 0) {
-                            cout << ans[v.first] << edl;
-                            return;
-                        }
-                    }
-                }
+            if(d[v] == -1) {
+                d[v] = d[u] + 1;
+                maxd = max(maxd, d[v]);
+                q.push(v);
             }
         }
     }
+
+    auto ok = [&](int mid) {
+        vector<ll> tmp;
+        for(int i = 2; i <= n; i++) {
+            if(d[i] <= mid) tmp.push_back(mp[i]);
+        } 
+
+        if(tmp.size() < k) return false;
+        sort(tmp.begin(), tmp.end());
+
+        ll sum = 0;
+        for(int i = 0; i < k; i++) {
+            sum += tmp[i];
+        }
+        return sum <= x;
+    };
+
+    int l = 1;
+    int r = maxd;
+
+    while(l < r) {
+        int mid = l + (r - l) / 2;
+        if(ok(mid)) r = mid;
+        else l = mid + 1;
+    }
+
+    if(!ok(l)) cout << -1 << edl;
+    else cout << l << edl;
 }
 
 int main() {
